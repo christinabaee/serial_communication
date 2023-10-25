@@ -1,0 +1,27 @@
+const int potentiometerPin = A0; // Analog pin connected to the potentiometer
+int inByte = 0;
+
+void establishContact() {
+  while (Serial.available() <= 0) {
+    Serial.println("0");  // send an initial string
+    delay(300);
+  }
+}
+
+void setup() {
+  Serial.begin(9600); // Initialize serial communication
+  while (!Serial) {
+    ;
+  }
+  establishContact();
+}
+
+void loop() {
+  if (Serial.available()>0){
+    int val = analogRead(potentiometerPin); // Read the analog value from the potentiometer
+    int potVal=map(val,0,1023,1,10);
+    Serial.print("Potentiometer Value: ");
+    Serial.println(potVal); // Print the value to the Serial Monitor
+  }
+}
+
